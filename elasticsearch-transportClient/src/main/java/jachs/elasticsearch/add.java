@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.bulk.BulkItemResponse;
@@ -120,10 +121,10 @@ public class add {
 		BulkRequestBuilder bulkRequestBuilder=client.prepareBulk();
 		for (int i = 0; i <2; i++) {
 			Map<String, Object>map=new HashMap<String, Object>();
-			map.put("name", "akooadw"+i);
+			map.put("name", "njhiaw"+i);
 			map.put("gent", "男");
-			map.put("age", i);
-			map.put("region", "泰国");
+			map.put("age", new Random().nextInt()*10);
+			map.put("region", "中国");
 			bulkRequestBuilder.add(client.prepareIndex(EsIndex, EsType).setSource(map));
 		}
 		

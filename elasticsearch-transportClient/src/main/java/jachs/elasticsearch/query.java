@@ -32,6 +32,12 @@ import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.avg.Avg;
+import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.max.Max;
+import org.elasticsearch.search.aggregations.metrics.max.MaxAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.min.Min;
+import org.elasticsearch.search.aggregations.metrics.min.MinAggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.After;
@@ -186,21 +192,53 @@ public class query {
 	public void test6() {
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(EsIndex);
 		TermsAggregationBuilder teamAgg = AggregationBuilders.terms("region_s").field("region.keyword");// 分组
-		TermsAggregationBuilder gentAgg = AggregationBuilders.terms("gent_s").field("gent.keyword").order(BucketOrder.count(true));//分组,排序
-		
-		SearchResponse searchResponse = searchRequestBuilder
-				.addAggregation(teamAgg.subAggregation(gentAgg))
-				.execute().actionGet();
+		TermsAggregationBuilder gentAgg = AggregationBuilders.terms("gent_s").field("gent.keyword")
+				.order(BucketOrder.count(true));// 分组,排序
+
+		SearchResponse searchResponse = searchRequestBuilder.addAggregation(teamAgg.subAggregation(gentAgg)).execute()
+				.actionGet();
 
 		Aggregations aggregations = searchResponse.getAggregations();
 		Terms terms = aggregations.get("region_s");
 		Terms terms2;
-        for (Terms.Bucket bucket : terms.getBuckets()) {
-            System.out.println("地区=" + bucket.getKey());
-            terms2 = bucket.getAggregations().get("gent_s");
-            for (Terms.Bucket bucket2 : terms2.getBuckets()) {
-                System.out.println("性别=" + bucket2.getKey() + ";个数=" + bucket2.getDocCount());
-            }
-        }
+		for (Terms.Bucket bucket : terms.getBuckets()) {
+			System.out.println("地区=" + bucket.getKey());
+			terms2 = bucket.getAggregations().get("gent_s");
+			for (Terms.Bucket bucket2 : terms2.getBuckets()) {
+				System.out.println("性别=" + bucket2.getKey() + ";个数=" + bucket2.getDocCount());
+			}
+		}
+	}
+	
+	//取分组最大值,最小值,平均值
+	@Test
+	public void test7() {
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(EsIndex);
+		TermsAggregationBuilder teamAgg = AggregationBuilders.terms("region_s").field("region.keyword");// 分组
+//		MaxAggregationBuilder ageAgg = AggregationBuilders.max("age_s").field("age");
+//		MinAggregationBuilder ageAgg=AggregationBuilders.min("age_s").field("age");
+		AvgAggregationBuilder avgAgg=AggregationBuilders.avg("age_s").field("age");
+		SearchResponse searchResponse = searchRequestBuilder.addAggregation(teamAgg.subAggregation(avgAgg)).execute()
+				.actionGet();
+
+		Aggregations aggregations = searchResponse.getAggregations();
+		Terms terms = aggregations.get("region_s");
+//		Max max;
+//		Min min;
+		Avg avg;
+		for (Terms.Bucket bucket : terms.getBuckets()) {
+			System.out.println("地区=" + bucket.getKey());
+//			max = bucket.getAggregations().get("age_s");
+//			System.out.println("最大数据名称="+max.getName());
+//			System.out.println("最大数据值="+max.getValue());
+			
+//			min=bucket.getAggregations().get("age_s");
+//			System.out.println("最小数据名称="+min.getName());
+//			System.out.println("最小数据值="+min.getValue());
+			
+			avg=bucket.getAggregations().get("age_s");
+			System.out.println("平均数据名称="+avg.getName());
+			System.out.println("平均数据值="+avg.getValue());
+		}
 	}
 }
