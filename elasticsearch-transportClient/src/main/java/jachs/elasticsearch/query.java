@@ -211,6 +211,7 @@ public class query {
 	}
 	
 	//取分组最大值,最小值,平均值
+	//https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/_metrics_aggregations.html
 	@Test
 	public void test7() {
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(EsIndex);
