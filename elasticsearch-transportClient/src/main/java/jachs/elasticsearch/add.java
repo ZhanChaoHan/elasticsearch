@@ -114,4 +114,24 @@ public class add {
 			System.out.println(itemResponse.getItemId());
 		}
 	}
+	
+	@Test
+	public void add4() {
+		BulkRequestBuilder bulkRequestBuilder=client.prepareBulk();
+		for (int i = 0; i <2; i++) {
+			Map<String, Object>map=new HashMap<String, Object>();
+			map.put("name", "akooadw"+i);
+			map.put("gent", "男");
+			map.put("age", i);
+			map.put("region", "泰国");
+			bulkRequestBuilder.add(client.prepareIndex(EsIndex, EsType).setSource(map));
+		}
+		
+		BulkResponse bulkResponse=bulkRequestBuilder.execute().actionGet();
+		Iterator<BulkItemResponse>bulkItemResponse= bulkResponse.iterator();
+		while(bulkItemResponse.hasNext()){
+			BulkItemResponse itemResponse=bulkItemResponse.next();
+			System.out.println(itemResponse.getItemId());
+		}
+	}
 }
