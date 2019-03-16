@@ -6,16 +6,20 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
-import org.elasticsearch.action.delete.DeleteRequestBuilder;
+import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class delete {
+public class query {
 	private TransportClient client;
 	private String EsIndex;
 	private String EsType;
@@ -50,11 +54,27 @@ public class delete {
 			client.close();
 		}
 	}
-
+	//单条查询
 	@Test
-	public void delete() {
-		DeleteRequestBuilder deleteRequestBuilder=client.prepareDelete();
-		deleteRequestBuilder.setId("");
-		deleteRequestBuilder.execute();
+	public void test(){
+		GetRequestBuilder getRequestBuilder=client.prepareGet(EsIndex, EsType,"Ps69hGkBfH7K1RnigH-e");
+		GetResponse getResponse=getRequestBuilder.execute().actionGet();
+		System.out.println(getResponse.getSourceAsString());
 	}
+	@Test
+	public void test1(){
+		GetRequestBuilder getRequestBuilder=client.prepareGet(EsIndex, EsType,"Ps69hGkBfH7K1RnigH-e");
+		GetResponse getResponse=getRequestBuilder.execute().actionGet();
+		System.out.println(getResponse.getSourceAsString());
+	}
+	//全查询
+	@Test
+	public void test2(){
+		SearchRequestBuilder searchRequestBuilder=client.prepareSearch("index");
+		SearchResponse searchResponse=searchRequestBuilder.execute().actionGet();
+		for (SearchHit searchHit : searchResponse.getHits().getHits()) {
+			System.out.println(searchHit.getSourceAsString());
+		}
+	}
+	
 }
