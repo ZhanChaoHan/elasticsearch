@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.client.reactive.ReactiveRestClient
  * @see 
  * 
  */
-static class Config {
+class Config {
 
     @Bean
     ReactiveElasticsearchClient client() {
