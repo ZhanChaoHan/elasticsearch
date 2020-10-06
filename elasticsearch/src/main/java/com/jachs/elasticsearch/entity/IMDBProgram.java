@@ -1,14 +1,15 @@
 package com.jachs.elasticsearch.entity;
 
-/**
- * @author zhanchaohan
- * 
- */
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
+/**
+ * @author zhanchaohan
+ * 
+ */
 @Document(indexName = "subprogram_data_test_3",type = "docs")
 public class IMDBProgram {
 

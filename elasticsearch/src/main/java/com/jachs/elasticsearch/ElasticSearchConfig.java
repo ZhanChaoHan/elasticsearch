@@ -9,10 +9,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import java.net.InetAddress;
 
+/****
+ * 自定义ElasticSearch配置
+ * @author Administrator
+ *
+ */
+
+/*
 @Configuration
+@PropertySource(value = "classpath:/elasticsearch.properties")
 public class ElasticSearchConfig {
     private Logger logger  = LoggerFactory.getLogger(this.getClass());
 
@@ -41,3 +50,4 @@ public class ElasticSearchConfig {
         return transportClient;
     }
 }
+*/
