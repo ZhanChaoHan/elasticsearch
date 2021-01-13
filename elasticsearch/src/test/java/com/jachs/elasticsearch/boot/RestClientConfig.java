@@ -49,7 +49,7 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
     public RestHighLevelClient elasticsearchClient () {
 
         final ClientConfiguration clientConfiguration = ClientConfiguration.builder ()
-                .connectedTo ( EsIp + ":9200" ).build ();
+                .connectedTo ( EsIp + ":"+EsPort ).build ();
 
         return RestClients.create ( clientConfiguration ).rest ();
     }
