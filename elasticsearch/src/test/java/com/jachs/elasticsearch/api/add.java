@@ -30,7 +30,7 @@ public class add {
     private String ClusterName;
     @Value( "${network.host}" )
     private String EsIp;
-    @Value( "${http.port}" )
+    @Value( "${tcp.port}" )
     private String EsPort;
     @Value( "${elasticsearch.index}" )
     private String EsIndex;

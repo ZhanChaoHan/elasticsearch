@@ -37,7 +37,7 @@ public class TransportClientConfig extends ElasticsearchConfigurationSupport {
     private String ClusterName;
     @Value( "${network.host}" )
     private String EsIp;
-    @Value( "${http.port}" )
+    @Value( "${tcp.port}" )
     private int EsPort;
     @Value( "${elasticsearch.index}" )
     private String EsIndex;
