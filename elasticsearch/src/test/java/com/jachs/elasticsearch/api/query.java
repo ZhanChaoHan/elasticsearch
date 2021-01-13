@@ -52,7 +52,13 @@ public class query {
 
 	@Before
 	public void init() {
-	    Settings settings = Settings.builder ().put ( "cluster.name", ClusterName ).build ();
+	    Settings settings = Settings.builder ()
+	            .put ( "cluster.name", ClusterName )//集群name
+	            .put ( "client.transport.sniff", false )//是否支持自动嗅探
+	            .put ( "client.transport.ignore_cluster_name", true )//设置为true忽略连接节点的群集名称验证。
+	            .put ( "client.transport.ping_timeout", 5 )//等待来自节点的ping响应的时间。默认值为5s。
+	            .put ( "client.transport.nodes_sampler_interval", 5 )//采样 ping列出和连接的节点的频率。默认值为5s。
+	            .build ();
         try {
             client = new PreBuiltTransportClient ( settings ).addTransportAddress (
                     new TransportAddress ( InetAddress.getByName ( EsIp ), Integer.parseInt ( EsPort ) ) );
