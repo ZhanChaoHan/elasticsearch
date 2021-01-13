@@ -59,7 +59,7 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
         RandomString rs=new RandomString ();
         Random random=new Random ();
         RestHighLevelClient highLevelClient=elasticsearchClient ();
-
+        
         RestClient lowLevelClient = highLevelClient.getLowLevelClient ();
 
         Map<String, String>dateMap=new HashMap<String, String>();

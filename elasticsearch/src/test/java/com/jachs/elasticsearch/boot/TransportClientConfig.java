@@ -63,7 +63,7 @@ public class TransportClientConfig extends ElasticsearchConfigurationSupport {
         Map<String, String>map=new HashMap<> ();
         map.put ( "一个字符串", "西巴西巴巴" );
         map.put ( "AantherString", "阿巴阿巴阿巴" );
-        IndexRequest request = new IndexRequest ( "spring-data", "elasticsearch", random.nextInt ()+"" )
+        IndexRequest request = new IndexRequest ( "spring-data-test", "elasticsearch", random.nextInt ()+"" )
                 .source ( map )
                 .setRefreshPolicy ( RefreshPolicy.IMMEDIATE );
         
