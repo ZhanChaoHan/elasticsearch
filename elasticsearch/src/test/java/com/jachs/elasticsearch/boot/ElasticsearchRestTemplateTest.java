@@ -26,21 +26,22 @@ import com.jachs.elasticsearch.ElasticsearchApplication;
  */
 @SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchRestTemplateTest {
-	@Autowired
-	private ElasticsearchRestTemplate restTemplate;
+//	@Autowired
+//	private ElasticsearchRestTemplate restTemplate;
 	@Autowired
 	private RestHighLevelClient elasticsearchClient;
 
+	//批量导入数据
 	@Test
-	public void tetst() throws IOException {
+	public void initScript() throws IOException {
 		BufferedReader brs = new BufferedReader(
 				new FileReader("C:\\Users\\Administrator.USER-20120726EP\\Desktop\\English\\dict\\book\\BEC_2.json"));
 		BulkRequest br = new BulkRequest();
 		
 		while (brs.ready()) {
-			IndexRequest ir=new IndexRequest("BEC_2");
+			IndexRequest ir=new IndexRequest("bec_2");//索引名称必须小写
 			String jsonRead = brs.readLine();
-			System.out.println(jsonRead);
+//			System.out.println(jsonRead);
 			ir.source(jsonRead, XContentType.JSON);
 			
 			br.add(ir);
@@ -48,4 +49,10 @@ public class ElasticsearchRestTemplateTest {
 		elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 		brs.close();
 	}
+	@Test
+	public void test1() throws IOException {
+		
+		
+	}
+	
 }

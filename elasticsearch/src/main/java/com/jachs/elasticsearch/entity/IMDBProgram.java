@@ -16,7 +16,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
  */
 @Data
 @NoArgsConstructor
-@Document(indexName = "IMDBProgram",indexStoreType = "docs")
+@Document(indexName = "iprogram",indexStoreType = "fs")
 public class IMDBProgram {
 
     @Id
