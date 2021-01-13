@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
 import com.jachs.elasticsearch.ElasticsearchApplication;
-import com.jachs.elasticsearch.dao.TestRepository;
+import com.jachs.elasticsearch.dao.IMDBProgramRepository;
 import com.jachs.elasticsearch.entity.IMDBProgram;
 
 /**
@@ -21,7 +21,7 @@ public class DaoTest {
     private ElasticsearchRestTemplate restTemplate;
     
     @Autowired
-    private TestRepository testRepository;
+    private IMDBProgramRepository testRepository;
     
     @Test
     public void createMyIndex() {

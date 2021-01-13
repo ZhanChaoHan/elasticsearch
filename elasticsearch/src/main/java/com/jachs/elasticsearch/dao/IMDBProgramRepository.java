@@ -8,6 +8,6 @@ import com.jachs.elasticsearch.entity.IMDBProgram;
 import java.util.List;
 
 @Component
-public interface TestRepository extends ElasticsearchRepository<IMDBProgram,String> {
+public interface IMDBProgramRepository extends ElasticsearchRepository<IMDBProgram,String> {
     List<IMDBProgram> findByEpisode(Long eps);
 }
