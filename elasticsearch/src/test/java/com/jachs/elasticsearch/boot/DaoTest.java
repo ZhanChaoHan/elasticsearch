@@ -5,7 +5,9 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
+import com.jachs.elasticsearch.ElasticsearchApplication;
 import com.jachs.elasticsearch.dao.TestRepository;
 import com.jachs.elasticsearch.entity.IMDBProgram;
 
@@ -13,11 +15,18 @@ import com.jachs.elasticsearch.entity.IMDBProgram;
  * @author zhanchaohan
  * 
  */
-@SpringBootTest()
+@SpringBootTest(classes =ElasticsearchApplication.class )
 public class DaoTest {
+    @Autowired
+    private ElasticsearchRestTemplate restTemplate;
+    
     @Autowired
     private TestRepository testRepository;
     
+    @Test
+    public void createMyIndex() {
+        restTemplate.createIndex ( IMDBProgram.class );
+    }
     /***
      * 单条添加
      */

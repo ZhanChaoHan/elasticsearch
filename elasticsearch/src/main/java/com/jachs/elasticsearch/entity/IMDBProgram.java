@@ -2,6 +2,10 @@ package com.jachs.elasticsearch.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -10,6 +14,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
  * @author zhanchaohan
  * 
  */
+@Data
+@NoArgsConstructor
 @Document(indexName = "subprogram_data_test_3",type = "docs")
 public class IMDBProgram {
 
@@ -42,67 +48,4 @@ public class IMDBProgram {
     @JsonProperty("delete_flag")
     private String deleteFlag;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getSubprogramId() {
-        return subprogramId;
-    }
-
-    public void setSubprogramId(Long subprogramId) {
-        this.subprogramId = subprogramId;
-    }
-
-    public Long getProgramId() {
-        return programId;
-    }
-
-    public void setProgramId(Long programId) {
-        this.programId = programId;
-    }
-
-    public Integer getEpisode() {
-        return episode;
-    }
-
-    public void setEpisode(Integer episode) {
-        this.episode = episode;
-    }
-
-    public Integer getParagraph() {
-        return paragraph;
-    }
-
-    public void setParagraph(Integer paragraph) {
-        this.paragraph = paragraph;
-    }
-
-    public Integer getDirectWeight() {
-        return directWeight;
-    }
-
-    public void setDirectWeight(Integer directWeight) {
-        this.directWeight = directWeight;
-    }
-
-    public String getSourceType() {
-        return sourceType;
-    }
-
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
-    }
-
-    public String getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(String deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
 }
