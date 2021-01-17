@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Date;
 
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
+import com.google.gson.Gson;
 import com.jachs.elasticsearch.ElasticsearchApplication;
+import com.jachs.elasticsearch.entity.BlogModel;
 
 /****
  * 
@@ -48,10 +51,6 @@ public class ElasticsearchRestTemplateTest {
 		}
 		elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 		brs.close();
-	}
-	@Test
-	public void test1() throws IOException {
-		
 	}
 	
 }
