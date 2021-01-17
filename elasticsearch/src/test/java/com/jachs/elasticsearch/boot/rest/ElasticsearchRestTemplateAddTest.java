@@ -17,6 +17,11 @@ import com.google.gson.Gson;
 import com.jachs.elasticsearch.ElasticsearchApplication;
 import com.jachs.elasticsearch.entity.BlogModel;
 
+/****
+ * 
+ * @author zhanchaohan
+ *
+ */
 @SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchRestTemplateAddTest {
 	@Autowired
@@ -46,7 +51,7 @@ public class ElasticsearchRestTemplateAddTest {
 			 IndexRequest indexRequest = new IndexRequest(index);
 			 BlogModel bm=new BlogModel();
 			 bm.setId("我的測試"+ko);
-			 bm.setTime(new Date(2025, 02, 25));
+			 bm.setTime(new Date(2025, rd.nextInt(12), rd.nextInt(30)));
 			 bm.setTitle("測試標題"+ko);
 			 bm.setAge(rd.nextInt(100));
 			 bm.setMoney(rd.nextDouble());
@@ -56,5 +61,18 @@ public class ElasticsearchRestTemplateAddTest {
 			 br.add(indexRequest);
 		}
 		 elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
+	}
+	//一个批处理添加多个索引数据
+	@Test
+	public void test3() throws IOException {
+		BulkRequest request = new BulkRequest(); 
+		request.add(new IndexRequest("test")
+		        .source(XContentType.JSON,"tcc", "decription1"));
+		request.add(new IndexRequest("blog")  
+		        .source(XContentType.JSON,"tcc", "decription2"));
+		request.add(new IndexRequest("iprogram")  
+		        .source(XContentType.JSON,"tcc", "decription3"));
+		
+		 elasticsearchClient.bulk(request, RequestOptions.DEFAULT);
 	}
 }
