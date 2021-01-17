@@ -8,4 +8,5 @@ import com.jachs.elasticsearch.entity.BlogModel;
 
 @Component
 public interface BlogRepository extends ElasticsearchRepository<BlogModel,String> {
+	public BlogModel findByIdAndTitle(String id,String title);
 }
