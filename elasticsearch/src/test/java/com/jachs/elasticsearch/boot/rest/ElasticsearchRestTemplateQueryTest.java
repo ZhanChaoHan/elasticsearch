@@ -103,7 +103,12 @@ public class ElasticsearchRestTemplateQueryTest {
 		
 //		searchSourceBuilder.query(new BoolQueryBuilder().must(QueryBuilders.wildcardQuery("id", "我的測試3")));
 		
-		searchSourceBuilder.query(new BoolQueryBuilder().must(QueryBuilders.termQuery("id", "我的測試")));
+		//match query：会对查询语句进行分词，分词后查询语句中的任何一个词项被匹配，文档就会被搜索到。如果想查询匹配所有关键词的文档，可以用and操作符连接；
+//		searchSourceBuilder.query(new BoolQueryBuilder().should(QueryBuilders.matchPhraseQuery("id", "我的測試3")));
+		//match_phrase query：满足下面两个条件才会被搜索到
+		//（1）分词后所有词项都要出现在该字段中
+		//（2）字段中的词项顺序要一致
+		searchSourceBuilder.query(new BoolQueryBuilder().should(QueryBuilders.matchQuery("id", "我的測試3")));
 		
 		SearchRequest searchRequest = new SearchRequest(index).source(searchSourceBuilder);
 		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
