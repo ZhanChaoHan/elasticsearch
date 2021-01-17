@@ -1,4 +1,4 @@
-package com.jachs.elasticsearch.boot;
+package com.jachs.elasticsearch.boot.rest;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -51,7 +51,6 @@ public class ElasticsearchRestTemplateTest {
 	}
 	@Test
 	public void test1() throws IOException {
-		
 		
 	}
 	
