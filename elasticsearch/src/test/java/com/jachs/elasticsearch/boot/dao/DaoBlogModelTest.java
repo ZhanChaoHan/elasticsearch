@@ -17,7 +17,7 @@ import com.jachs.elasticsearch.entity.BlogModel;
 
 /**
  * @author zhanchaohan
- * 
+ * @see https://github.com/spring-projects/spring-data-elasticsearch
  */
 @SpringBootTest(classes =ElasticsearchApplication.class )
 public class DaoBlogModelTest {
@@ -47,9 +47,22 @@ public class DaoBlogModelTest {
 		}
 		blogRepository.saveAll(bmList);
 	}
+	//Jpa规范查询
 	@Test
 	public void query1() {
 		BlogModel bm=blogRepository.findByIdAndTitle("0Id","-480824872lkc");
 		System.out.println(bm.toString());
 	}
+	//主键语句查询
+	@Test
+	public void query2() {
+		BlogModel bm=blogRepository.findByQueryName();
+		System.out.println(bm.toString());
+	}
+	//主键语句查询,带参数
+		@Test
+		public void query3() {
+			BlogModel bm=blogRepository.findByQueryName("21222676lkc");
+			System.out.println(bm.toString());
+		}
 }
