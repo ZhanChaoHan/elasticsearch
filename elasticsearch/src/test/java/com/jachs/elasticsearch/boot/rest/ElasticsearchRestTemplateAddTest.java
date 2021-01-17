@@ -52,7 +52,8 @@ public class ElasticsearchRestTemplateAddTest {
 			 BlogModel bm=new BlogModel();
 			 bm.setId("我的測試"+ko);
 			 bm.setTime(new Date(2025, rd.nextInt(12), rd.nextInt(30)));
-			 bm.setTitle("測試標題"+ko);
+//			 bm.setTitle("測試標題"+ko);
+			 bm.setTitle("we goo"+ko);
 			 bm.setAge(rd.nextInt(100));
 			 bm.setMoney(rd.nextDouble());
 			 

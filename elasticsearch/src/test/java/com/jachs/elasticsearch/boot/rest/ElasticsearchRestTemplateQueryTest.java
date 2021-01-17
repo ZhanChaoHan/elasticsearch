@@ -73,8 +73,8 @@ public class ElasticsearchRestTemplateQueryTest {
 	//高亮
 	@Test
 	public void test4() throws IOException {
-		 String preTags = "<strong>";
-	     String postTags = "</strong>";
+		String preTags = "<strong>";
+	    String postTags = "</strong>";
 	        
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		//创建一个新的HighlightBuilder
@@ -97,4 +97,17 @@ public class ElasticsearchRestTemplateQueryTest {
 		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
 		System.out.println(srs);
 	}
+	@Test
+	public void test5() throws IOException {
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		
+//		searchSourceBuilder.query(new BoolQueryBuilder().must(QueryBuilders.wildcardQuery("id", "我的測試3")));
+		
+		searchSourceBuilder.query(new BoolQueryBuilder().must(QueryBuilders.termQuery("id", "我的測試")));
+		
+		SearchRequest searchRequest = new SearchRequest(index).source(searchSourceBuilder);
+		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+		System.out.println(srs.getHits().getHits().length);
+	}
+	
 }
