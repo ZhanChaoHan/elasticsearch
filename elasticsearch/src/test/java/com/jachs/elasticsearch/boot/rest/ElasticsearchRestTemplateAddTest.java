@@ -2,6 +2,7 @@ package com.jachs.elasticsearch.boot.rest;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Random;
 
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
@@ -10,16 +11,19 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.google.gson.Gson;
+import com.jachs.elasticsearch.ElasticsearchApplication;
 import com.jachs.elasticsearch.entity.BlogModel;
 
+@SpringBootTest(classes = ElasticsearchApplication.class)
 public class ElasticsearchRestTemplateAddTest {
 	@Autowired
 	private RestHighLevelClient elasticsearchClient;
 	
 	private static final String index="test";
-	//单条添加
+	//单条添加,创建索引
 	@Test
 	public void test1() throws IOException {
 		 IndexRequest indexRequest = new IndexRequest(index);
@@ -27,6 +31,8 @@ public class ElasticsearchRestTemplateAddTest {
 		 bm.setId("我的測試");
 		 bm.setTime(new Date(2025, 02, 25));
 		 bm.setTitle("測試標題");
+		 bm.setAge(12);
+		 bm.setMoney(66.66);
 		 indexRequest.source(new Gson().toJson(bm), XContentType.JSON);
 		 
 		 elasticsearchClient.index(indexRequest, RequestOptions.DEFAULT);
@@ -35,12 +41,16 @@ public class ElasticsearchRestTemplateAddTest {
 	@Test
 	public void test2() throws IOException {
 		BulkRequest br=new BulkRequest();
+		Random rd=new Random();
 		for (int ko = 0; ko < 5; ko++) {
 			 IndexRequest indexRequest = new IndexRequest(index);
 			 BlogModel bm=new BlogModel();
 			 bm.setId("我的測試"+ko);
 			 bm.setTime(new Date(2025, 02, 25));
 			 bm.setTitle("測試標題"+ko);
+			 bm.setAge(rd.nextInt(100));
+			 bm.setMoney(rd.nextDouble());
+			 
 			 indexRequest.source(new Gson().toJson(bm), XContentType.JSON);
 			 
 			 br.add(indexRequest);

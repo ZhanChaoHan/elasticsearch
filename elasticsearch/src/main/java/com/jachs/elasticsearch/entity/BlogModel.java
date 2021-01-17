@@ -23,6 +23,8 @@ public class BlogModel implements Serializable {
     private String id;
 
     private String title;
+    private Integer age;
+    private Double money;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
