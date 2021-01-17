@@ -1,4 +1,4 @@
-package com.jachs.elasticsearch.boot;
+package com.jachs.elasticsearch.boot.dao;
 
 import java.util.Random;
 
@@ -16,7 +16,7 @@ import com.jachs.elasticsearch.entity.IMDBProgram;
  * 
  */
 @SpringBootTest(classes =ElasticsearchApplication.class )
-public class DaoTest {
+public class DaoIMDBProgramTest {
     @Autowired
     private ElasticsearchRestTemplate restTemplate;
     
