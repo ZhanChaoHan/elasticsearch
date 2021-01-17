@@ -18,6 +18,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,7 +57,7 @@ public class ElasticsearchRestTemplateQueryTest {
 	@Test
 	public void test3() throws IOException {
 		String[] includeFields = new String[] {"id", "age"};//将要查询出的字段
-				String[] excludeFields = new String[] {"money","time"};//过滤掉的字段
+		String[] excludeFields = new String[] {"money","time"};//过滤掉的字段
 				
 				
 		SearchRequest searchRequest = new SearchRequest(index); 
@@ -66,6 +67,33 @@ public class ElasticsearchRestTemplateQueryTest {
 		
 		
 		searchRequest.source(sourceBuilder);
+		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
+		System.out.println(srs);
+	}
+	//高亮
+	@Test
+	public void test4() throws IOException {
+		 String preTags = "<strong>";
+	     String postTags = "</strong>";
+	        
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		//创建一个新的HighlightBuilder
+		HighlightBuilder highlightBuilder = new HighlightBuilder(); 
+		//创建title的高亮
+		HighlightBuilder.Field highlightTitle =
+		        new HighlightBuilder.Field("title"); 
+		//设置高亮类型
+		highlightTitle.highlighterType("unified");  
+		//将高亮类型加入到highlightBuilder中
+		highlightBuilder.field(highlightTitle);  
+//		highlightBuilder.field(new HighlightBuilder.Field("money"));
+		
+		highlightBuilder.preTags(preTags);//设置前缀
+	    highlightBuilder.postTags(postTags);//设置后缀
+	    highlightBuilder.requireFieldMatch(false);//多次段高亮需要设置为false
+		searchSourceBuilder.highlighter(highlightBuilder);
+		searchSourceBuilder.query(QueryBuilders.matchQuery("title", "標題"));//查询符合高亮条件的数据
+		SearchRequest searchRequest = new SearchRequest(index).source(searchSourceBuilder);
 		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
 		System.out.println(srs);
 	}
