@@ -114,5 +114,8 @@ public class ElasticsearchRestTemplateQueryTest {
 		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
 		System.out.println(srs.getHits().getHits().length);
 	}
-	
+	@Test
+	public void test6() {
+		
+	}
 }

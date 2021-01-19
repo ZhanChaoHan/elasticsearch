@@ -2,8 +2,11 @@ package com.jachs.elasticsearch.boot.rest;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
@@ -75,5 +78,37 @@ public class ElasticsearchRestTemplateAddTest {
 		        .source(XContentType.JSON,"tcc", "decription3"));
 		
 		 elasticsearchClient.bulk(request, RequestOptions.DEFAULT);
+	}
+	@Test
+	public void test5() throws IOException {
+		BulkRequest br=new BulkRequest();
+		Random random=new Random();
+		
+		for (int kk = 0; kk <50; kk++) {
+			IndexRequest indexRequest = new IndexRequest("user");
+			Map<String, Object>dateMap=new HashMap<String, Object>();
+			if(kk<=10) {
+				dateMap.put("group", "自行车");
+			}
+			if(kk>10&&kk<=20) {
+				dateMap.put("group", "小电驴");
+			}
+			if(kk>20&&kk<=30) {
+				dateMap.put("group", "小汽车");
+			}
+			if(kk>30&&kk<=40) {
+				dateMap.put("group", "步行");
+			}
+			if(kk>40) {
+				dateMap.put("group", "tank");
+			}
+			dateMap.put("userName", RandomStringUtils.random(6, 0x4e00, 0x9fa5, false,false));
+			dateMap.put("userAge", random.nextInt(100));
+			dateMap.put("userMoney", random.nextDouble());
+			indexRequest.source(dateMap);
+			
+			br.add(indexRequest);
+		}
+		elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 	}
 }
