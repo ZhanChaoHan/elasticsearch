@@ -89,18 +89,23 @@ public class ElasticsearchRestTemplateAddTest {
 			Map<String, Object>dateMap=new HashMap<String, Object>();
 			if(kk<=10) {
 				dateMap.put("group", "自行车");
+				dateMap.put("country", "澳大利亚");
 			}
 			if(kk>10&&kk<=20) {
 				dateMap.put("group", "小电驴");
+				dateMap.put("country", "意大利");
 			}
 			if(kk>20&&kk<=30) {
 				dateMap.put("group", "小汽车");
+				dateMap.put("country", "大虾米");
 			}
 			if(kk>30&&kk<=40) {
-				dateMap.put("group", "步行");
+				dateMap.put("group", "大步行");
+				dateMap.put("country", "大米");
 			}
 			if(kk>40) {
 				dateMap.put("group", "tank");
+				dateMap.put("country", "german");
 			}
 			dateMap.put("userName", RandomStringUtils.random(6, 0x4e00, 0x9fa5, false,false));
 			dateMap.put("userAge", random.nextInt(100));
