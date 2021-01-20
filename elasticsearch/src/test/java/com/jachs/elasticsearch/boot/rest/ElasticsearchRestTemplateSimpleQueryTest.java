@@ -81,7 +81,9 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 
 //		 searchSourceBuilder.query(QueryBuilders.matchBoolPrefixQuery("country", "澳大利亚"));
 		 
-		 searchSourceBuilder.query(QueryBuilders.multiMatchQuery("大", "country","group"));//将要匹配的字符串,...想要匹配的列
+//		 searchSourceBuilder.query(QueryBuilders.multiMatchQuery("大", "country","group"));//将要匹配的字符串,...想要匹配的列
+		 
+		 searchSourceBuilder.query(QueryBuilders.matchPhrasePrefixQuery("country", "大虾米"));//前缀查询全匹配
 		 
 		 SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
 		 

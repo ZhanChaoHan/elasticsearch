@@ -84,7 +84,7 @@ public class ElasticsearchRestTemplateAddTest {
 		BulkRequest br=new BulkRequest();
 		Random random=new Random();
 		
-		for (int kk = 0; kk <50; kk++) {
+		for (int kk = 0; kk <60; kk++) {
 			IndexRequest indexRequest = new IndexRequest("user");
 			Map<String, Object>dateMap=new HashMap<String, Object>();
 			if(kk<=10) {
@@ -103,9 +103,13 @@ public class ElasticsearchRestTemplateAddTest {
 				dateMap.put("group", "大步行");
 				dateMap.put("country", "大米");
 			}
-			if(kk>40) {
+			if(kk>40&&kk<=50) {
 				dateMap.put("group", "tank");
 				dateMap.put("country", "german");
+			}
+			if(kk>50&&kk<=60) {
+				dateMap.put("group", "小的汽车");
+				dateMap.put("country", "大虾米棒子");
 			}
 			dateMap.put("userName", RandomStringUtils.random(6, 0x4e00, 0x9fa5, false,false));
 			dateMap.put("userAge", random.nextInt(100));
