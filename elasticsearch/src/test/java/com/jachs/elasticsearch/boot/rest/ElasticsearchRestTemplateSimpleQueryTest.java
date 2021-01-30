@@ -60,10 +60,20 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 printSearchHit(searchHit);
 		 System.out.println(searchHit.length);
 	}
+	//分页
+	public void test2() throws IOException {
+		 searchSourceBuilder.size(5);
+		 rq.source(searchSourceBuilder);
+		 SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
+		 
+		 SearchHit[] searchHit=srr.getHits().getHits();
+		 printSearchHit(searchHit);
+		 System.out.println(searchHit.length);
+	}
 	//区间查询
 	//gt>,lt<;gte>=,lte<=
 	@Test
-	public void test2() throws IOException {
+	public void test3() throws IOException {
 		 rq.source(searchSourceBuilder);
 		 //数据区间查询
 //		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").from ( 15 ).to ( 20 ));//userAge>=15&&userAge<=20
@@ -84,7 +94,7 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 System.out.println(searchHit.length);
 	}
 	@Test
-	public void test3() throws IOException {
+	public void test4() throws IOException {
 		 rq.source(searchSourceBuilder);
 		 
 //		 searchSourceBuilder.query(QueryBuilders.matchAllQuery());//全查

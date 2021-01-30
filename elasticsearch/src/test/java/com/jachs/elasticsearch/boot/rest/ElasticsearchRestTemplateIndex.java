@@ -21,10 +21,10 @@ public class ElasticsearchRestTemplateIndex {
 	@Autowired
 	private RestHighLevelClient elasticsearchClient;
 	
+	//创建空的index
 	@Test
 	public void test1() throws IOException {
 		CreateIndexRequest cir=new CreateIndexRequest("user");
 		elasticsearchClient.indices().create(cir, RequestOptions.DEFAULT);
-		
 	}
 }
