@@ -60,11 +60,22 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 printSearchHit(searchHit);
 		 System.out.println(searchHit.length);
 	}
+	//区间查询
+	//gt>,lt<;gte>=,lte<=
 	@Test
 	public void test2() throws IOException {
 		 rq.source(searchSourceBuilder);
-		 //gte>=,lte<=;gt<,lt>
-		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").gte(15).lte(30));//区间查询
+		 //数据区间查询
+//		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").from ( 15 ).to ( 20 ));//userAge>=15&&userAge<=20
+//		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").from ( 15,false ).to ( 20 ,false));
+	 
+//		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").gt(15).lt(20));
+//		 searchSourceBuilder.query(QueryBuilders.rangeQuery("userAge").gte(15).lte(20));
+		 
+		 
+		 //时间区间查询
+		 searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp1").from ( 20210129174011L ).to ( 20210229174011L ));
+		 
 		 
 		 SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
 		 
