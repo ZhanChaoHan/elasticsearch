@@ -15,10 +15,19 @@
 	<name>elasticsearch</name>
 	<description>elasticsearchDemo</description>
 
+
+	<developers>
+		<developer>
+			<name>詹超涵</name>
+			<url>https://github.com/zhanchaohan/</url>
+			<email>799516423@qq.com</email>
+		</developer>
+	</developers>
+	
 	<properties>
 		<java.version>1.8</java.version>
 		<es.version>7.9.2</es.version>
-		<!--<es.version>6.3.2</es.version>-->
+		<!--<es.version>6.3.2</es.version> -->
 	</properties>
 
 	<dependencies>
