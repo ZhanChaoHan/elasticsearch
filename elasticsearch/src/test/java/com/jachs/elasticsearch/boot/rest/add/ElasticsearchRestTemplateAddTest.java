@@ -1,4 +1,4 @@
-package com.jachs.elasticsearch.boot.rest;
+package com.jachs.elasticsearch.boot.rest.add;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -12,6 +12,8 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,5 +143,43 @@ public class ElasticsearchRestTemplateAddTest {
 			br.add(indexRequest);
 		}
 		elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
+	}
+	//添加大量数据
+	public void test6() throws IOException {
+	    BulkRequest br=new BulkRequest();
+	    String type="";
+	    
+	    for ( int kk = 0 ; kk < 5000 ; kk++ ) {
+    	    IndexRequest indexRequest = new IndexRequest(index);
+    	    XContentBuilder xContentBuilder=XContentFactory.jsonBuilder()
+    	            .startObject()
+                    .startObject(type)
+                    .startObject("properties")
+                    .startObject("user")
+                    .field("type","string")
+                    .field("index","not_analyzed")
+                    .endObject()
+                    .startObject("postDate")
+                    .field("type","date")
+                    .endObject()
+                    .startObject("message")
+                    .field("type","string")
+                    .field("index","not_analyzed")
+                    .endObject()
+                    .startObject("address")
+                    .field("type","string")
+                    .endObject()
+                    .startObject("车牌号")
+                    .field("type","string")
+                    .field("index","ik")
+                    .endObject()
+                    .endObject()
+                    .endObject();
+    	    
+    	    indexRequest.source ( xContentBuilder );
+    	    
+    	    br.add ( indexRequest );
+	    }
+	    elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 	}
 }

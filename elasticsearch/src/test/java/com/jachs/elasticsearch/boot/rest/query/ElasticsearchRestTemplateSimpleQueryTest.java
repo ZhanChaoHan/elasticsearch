@@ -21,6 +21,7 @@ import com.jachs.elasticsearch.ElasticsearchApplication;
 
 /****
  * 简单查询
+ *条件查询
  * @author zhanchaohan
  * @see ElasticsearchRestTemplateAddTest.test5
  */
