@@ -1,4 +1,4 @@
-package com.jachs.elasticsearch.boot.rest;
+package com.jachs.elasticsearch.boot.rest.query;
 
 import java.io.IOException;
 import java.util.Map;
