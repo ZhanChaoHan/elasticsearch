@@ -54,6 +54,7 @@ public class ElasticsearchRestTemplateQueryTest {
             System.out.println ("message:"+ message.getString ( "type" )+"\t\t"+message.getString ( "index" ));
             System.out.println ("address:"+ address.getString ( "type" ));
             System.out.println ("no:"+no.getString ( "index" )+"\t\t"+ no.getString ( "type" ));
+            System.out.println ( "---------------------------------------------------------------" );
        }
    }
 
