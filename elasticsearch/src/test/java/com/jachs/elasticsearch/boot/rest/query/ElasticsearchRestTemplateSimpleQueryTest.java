@@ -7,7 +7,6 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -84,9 +83,16 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 printSearchHit(searchHit);
 		 System.out.println(searchHit.length);
 	}
+	//简单查询
 	@Test
 	public void test4() throws IOException {
 		 rq.source(searchSourceBuilder);
+		 String[] includeFields = new String[] {"country"};//将要查询出的字段
+		 
+//		 searchSourceBuilder.query(QueryBuilders.termQuery ( "country", "大" ));//不分词查询,因为不分词所有汉字只能查一个字
+		 searchSourceBuilder.query(QueryBuilders.termsQuery ( "country", "大","m" ));//
+		 
+		 searchSourceBuilder.fetchSource(includeFields, null);
 		 
 //		 searchSourceBuilder.query(QueryBuilders.matchAllQuery());//全查
 //		 searchSourceBuilder.query(QueryBuilders.matchQuery("country", "澳大利亚"));//匹配上一个字符就查出来
@@ -95,7 +101,7 @@ public class ElasticsearchRestTemplateSimpleQueryTest {
 		 
 //		 searchSourceBuilder.query(QueryBuilders.multiMatchQuery("大", "country","group"));//将要匹配的字符串,...想要匹配的列
 		 
-		 searchSourceBuilder.query(QueryBuilders.matchPhrasePrefixQuery("country", "大虾米"));//前缀查询全匹配
+//		 searchSourceBuilder.query(QueryBuilders.matchPhrasePrefixQuery("country", "大虾米"));//前缀查询全匹配
 		 
 		 SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
 		 

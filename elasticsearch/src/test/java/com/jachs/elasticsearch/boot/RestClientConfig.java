@@ -15,14 +15,11 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.google.gson.Gson;
 
 /***
  * High Level REST Client
