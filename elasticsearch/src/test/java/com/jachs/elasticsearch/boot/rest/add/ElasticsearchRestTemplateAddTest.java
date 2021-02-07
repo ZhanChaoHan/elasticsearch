@@ -34,6 +34,7 @@ public class ElasticsearchRestTemplateAddTest {
 	private RestHighLevelClient elasticsearchClient;
 	
 	private static final String index="test";
+	private static final String xbIndex="xbIndex";
 	//单条添加,创建索引
 	@Test
 	public void test1() throws IOException {
@@ -145,12 +146,14 @@ public class ElasticsearchRestTemplateAddTest {
 		elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 	}
 	//添加大量数据
+	@Test
 	public void test6() throws IOException {
 	    BulkRequest br=new BulkRequest();
-	    String type="";
+	    String type="mytest";
 	    
 	    for ( int kk = 0 ; kk < 5000 ; kk++ ) {
-    	    IndexRequest indexRequest = new IndexRequest(index);
+    	    IndexRequest indexRequest = new IndexRequest(xbIndex);
+    	    
     	    XContentBuilder xContentBuilder=XContentFactory.jsonBuilder()
     	            .startObject()
                     .startObject(type)
@@ -160,7 +163,7 @@ public class ElasticsearchRestTemplateAddTest {
                     .field("index","not_analyzed")
                     .endObject()
                     .startObject("postDate")
-                    .field("type","date")
+                    .field("type",kk)
                     .endObject()
                     .startObject("message")
                     .field("type","string")
@@ -174,11 +177,12 @@ public class ElasticsearchRestTemplateAddTest {
                     .field("index","ik")
                     .endObject()
                     .endObject()
-                    .endObject();
+                    .endObject()
+                    .endObject ();
     	    
     	    indexRequest.source ( xContentBuilder );
     	    
-    	    br.add ( indexRequest );
+    	    br.add ( indexRequest);
 	    }
 	    elasticsearchClient.bulk(br, RequestOptions.DEFAULT);
 	}
