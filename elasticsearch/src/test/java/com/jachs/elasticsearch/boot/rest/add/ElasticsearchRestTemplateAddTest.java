@@ -34,7 +34,7 @@ public class ElasticsearchRestTemplateAddTest {
 	private RestHighLevelClient elasticsearchClient;
 	
 	private static final String index="test";
-	private static final String xbIndex="xbIndex";
+	private static final String xbIndex="xbindex";
 	//单条添加,创建索引
 	@Test
 	public void test1() throws IOException {
@@ -161,13 +161,13 @@ public class ElasticsearchRestTemplateAddTest {
 	    
 	    for ( int kk = 0 ; kk < 5000 ; kk++ ) {
     	    IndexRequest indexRequest = new IndexRequest(xbIndex);
-    	    
+
     	    XContentBuilder xContentBuilder=XContentFactory.jsonBuilder()
     	            .startObject()
                     .startObject(type)
                     .startObject("properties")
                     .startObject("user")
-                    .field("type","string")
+                    .field("type",kk+"string")
                     .field("index","not_analyzed")
                     .endObject()
                     .startObject("postDate")
@@ -178,9 +178,9 @@ public class ElasticsearchRestTemplateAddTest {
                     .field("index","not_analyzed")
                     .endObject()
                     .startObject("address")
-                    .field("type","string")
+                    .field("type","127.0.0.1")
                     .endObject()
-                    .startObject("车牌号")
+                    .startObject("no")
                     .field("type","string")
                     .field("index","ik")
                     .endObject()

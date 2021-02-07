@@ -1,24 +1,30 @@
 package com.jachs.elasticsearch.boot.rest.query;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.document.DocumentField;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jachs.elasticsearch.ElasticsearchApplication;
 
 /****
- * 
+索引简单查询
+ * 分页查询,排序
  * @author zhanchaohan
  *
  */
@@ -28,7 +34,29 @@ public class ElasticsearchRestTemplateQueryTest {
 	private RestHighLevelClient elasticsearchClient;
 	
 	private static final String index="test";
+	private static final String xbIndex="xbindex";
 	
+	
+	private void printSearchHit(SearchHit[] searchHit) {
+        for (SearchHit sh : searchHit) {
+            JSONObject json=new JSONObject().parseObject ( sh.getSourceAsString () );
+            
+            JSONObject properties= json.getJSONObject ( "mytest" ).getJSONObject ( "properties" );
+            
+            JSONObject user= properties.getJSONObject ( "user" );
+            JSONObject postDate= properties.getJSONObject ( "postDate" );
+            JSONObject message= properties.getJSONObject ( "message" );
+            JSONObject address= properties.getJSONObject ( "address" );
+            JSONObject no= properties.getJSONObject ( "no" );
+            
+            System.out.println ("user:"+ user.getString ( "type" )+"\t\t"+user.getString ( "index" ));
+            System.out.println ("postDate:"+ postDate.getString ( "type" ));
+            System.out.println ("message:"+ message.getString ( "type" )+"\t\t"+message.getString ( "index" ));
+            System.out.println ("address:"+ address.getString ( "type" ));
+            System.out.println ("no:"+no.getString ( "index" )+"\t\t"+ no.getString ( "type" ));
+       }
+   }
+
 	//全查
 	@Test
 	public void test1() throws IOException {
@@ -87,33 +115,25 @@ public class ElasticsearchRestTemplateQueryTest {
 		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
 		System.out.println(srs);
 	}
+	
+	/****
+	 * 数据来源：com.jachs.elasticsearch.boot.rest.add.ElasticsearchRestTemplateAddTest.test6()
+	 * 分页查询,from-size"浅"分页
+	 */
 	@Test
 	public void test5() throws IOException {
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		
-//		searchSourceBuilder.query(new BoolQueryBuilder().must(QueryBuilders.wildcardQuery("id", "我的測試3")));
-		
-		//match query：会对查询语句进行分词，分词后查询语句中的任何一个词项被匹配，文档就会被搜索到。如果想查询匹配所有关键词的文档，可以用and操作符连接；
-//		searchSourceBuilder.query(new BoolQueryBuilder().should(QueryBuilders.matchPhraseQuery("id", "我的測試3")));
-		//match_phrase query：满足下面两个条件才会被搜索到
-		//（1）分词后所有词项都要出现在该字段中
-		//（2）字段中的词项顺序要一致
-		searchSourceBuilder.query(new BoolQueryBuilder().should(QueryBuilders.matchQuery("id", "我的測試3")));
-		
-		SearchRequest searchRequest = new SearchRequest(index).source(searchSourceBuilder);
-		SearchResponse srs=elasticsearchClient.search(searchRequest, RequestOptions.DEFAULT);
-		System.out.println(srs.getHits().getHits().length);
-	}
-	
-	//分页查询
-	@Test
-	public void test6() throws IOException {
-	    SearchRequest rq = new SearchRequest(index);
+	    SearchRequest rq = new SearchRequest(xbIndex);
 	    SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 	    
+	    searchSourceBuilder.from ( 0 );
+	    searchSourceBuilder.size ( 20 );
 	    
 	    rq.source ( searchSourceBuilder );
 	    SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
-        System.out.println(srr.getHits().getHits().length);
+	    SearchHits searchHits=srr.getHits();
+	    
+        System.out.println(searchHits.getHits().length);
+        
+        printSearchHit(searchHits.getHits ());
 	}
 }
