@@ -168,7 +168,7 @@ public class ElasticsearchRestTemplateAddTest {
                     .startObject("properties")
                     .startObject("user")
                     .field("type",kk+"nbrrq")
-                    .field("index","not_analyzed")
+                    .field("index",kk)
                     .endObject()
                     .startObject("postDate")
                     .field("type",kk)

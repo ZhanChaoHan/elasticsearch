@@ -12,6 +12,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -119,7 +120,7 @@ public class ElasticsearchRestTemplateQueryTest {
 	 * 分页查询,from-size"浅"分页
 	 */
 	@Test
-	public void test5() throws IOException {
+	public void test6() throws IOException {
 	    SearchRequest rq = new SearchRequest(xbIndex);
 	    SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 	    
@@ -133,5 +134,32 @@ public class ElasticsearchRestTemplateQueryTest {
         System.out.println(searchHits.getHits().length);
         
         printSearchHit(searchHits.getHits ());
+	}
+	/***
+	 * 查询全部
+	 */
+	@Test
+	public void test7() throws IOException {
+	    int pageCount=10;//一页展示多少条
+	    int page=1;//当前页
+	    
+	    while(true) {
+    	    SearchRequest rq = new SearchRequest(xbIndex);
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            
+            searchSourceBuilder.from ( (page-1)*page );
+            searchSourceBuilder.size ( page*pageCount );
+            
+            rq.source ( searchSourceBuilder );
+            SearchResponse srr=elasticsearchClient.search(rq, RequestOptions.DEFAULT);
+            SearchHits searchHits=srr.getHits();
+            
+            if(searchHits.getHits().length==0) {
+                break;
+            }
+            System.out.println(searchHits.getHits().length);
+            printSearchHit(searchHits.getHits ());
+            page++;
+	    }
 	}
 }
