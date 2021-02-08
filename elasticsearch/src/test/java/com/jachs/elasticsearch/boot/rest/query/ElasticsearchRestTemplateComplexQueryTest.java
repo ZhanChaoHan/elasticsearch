@@ -2,12 +2,14 @@ package com.jachs.elasticsearch.boot.rest.query;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.filter.Filter;
@@ -151,7 +153,10 @@ public class ElasticsearchRestTemplateComplexQueryTest {
                     + Ua_max.getName () + "\t\t" + Ua_max.getType () + "\t\t" + Ua_max.getValueAsString () );
         }
     }
-    
+    /***
+     * 分组加条件过滤
+     * @see https://www.elastic.co/guide/en/elasticsearch/client/java-api/current/_bucket_aggregations.html
+     */
     @Test
     public void test5 () throws IOException {
         TermsAggregationBuilder teamAgg = AggregationBuilders.terms ( "team" ).field ( "country.keyword" );
@@ -170,6 +175,31 @@ public class ElasticsearchRestTemplateComplexQueryTest {
           Filter filter= bucket.getAggregations ().get ( "country_filter" );
           System.out.println (filter.getName ()+"\t\t"+filter.getType ()+"\t\t"+ filter.getDocCount () );
           System.out.println ( "-----------------------------------" );
+        }
+    }
+    @Test
+    public void test6() throws IOException {
+        TermsAggregationBuilder teamAgg = AggregationBuilders.terms ( "team" ).field ( "country.keyword" ).size ( 1000 );
+        
+        AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders.avg ( "user_Age_avg" ).field ( "userAge" );
+        
+        FilterAggregationBuilder  country_filter= AggregationBuilders.filter ( "age_filter", QueryBuilders.rangeQuery ( "userAge" ).gt ( 15 ));
+    
+        teamAgg.subAggregation(avgAggregationBuilder);
+        teamAgg.subAggregation (country_filter);
+        
+        searchSourceBuilder.aggregation ( teamAgg );
+        rq.source ( searchSourceBuilder );
+        SearchResponse srr = elasticsearchClient.search ( rq, RequestOptions.DEFAULT );
+        
+        Terms userAgg = srr.getAggregations ().get ( "team" );
+        
+        for ( Terms.Bucket bucket : userAgg.getBuckets () ) {
+            Avg Ua_avg = bucket.getAggregations ().get ( "user_Age_avg" );
+            Filter filter= bucket.getAggregations ().get ( "age_filter" );
+            
+            System.out.println (bucket.getKey ()+"\t\t"+filter.getName ()+"\t\t"+filter.getDocCount ());
+            System.out.println (bucket.getKey ()+"\t\t"+Ua_avg.getName ()+"\t\t"+Ua_avg.getValue ());
         }
     }
 }
