@@ -202,4 +202,54 @@ public class ElasticsearchRestTemplateComplexQueryTest {
             System.out.println (bucket.getKey ()+"\t\t"+Ua_avg.getName ()+"\t\t"+Ua_avg.getValue ());
         }
     }
+    /****
+     * @author zhanchaohan
+     * @throws IOException 
+     * @see https://www.elastic.co/guide/cn/elasticsearch/guide/current/_filtering_queries.html
+     *求出userAge>50的userAge平均数
+     */
+    @Test
+    public void test7() throws IOException {
+        AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders.avg ( "user_Age_avg" ).field ( "userAge" );
+        
+        searchSourceBuilder.aggregation ( avgAggregationBuilder );
+        
+        searchSourceBuilder.query ( QueryBuilders.rangeQuery ( "userAge" ).gt ( 50 ) );
+        
+        rq.source ( searchSourceBuilder );
+        SearchResponse srr = elasticsearchClient.search ( rq, RequestOptions.DEFAULT );
+        
+        Avg avg = srr.getAggregations ().get ( "user_Age_avg" );
+        
+        System.out.println ( avg.getName ()
+                +"\t\t"+avg.getType ()
+                +"\t\t"+avg.getValue ()
+                +"\t\t"+avg.getValueAsString ()
+                );
+    }
+    /***
+     * test7()基础上添加条件分组根据country分组，求userAge>50的平均数
+     * @author zhanchaohan
+     */
+    @Test
+    public void test8() throws IOException {
+        TermsAggregationBuilder teamAgg = AggregationBuilders.terms ( "team" ).field ( "country.keyword" ).size ( 1000 );
+        
+        AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders.avg ( "user_Age_avg" ).field ( "userAge" );
+        
+        teamAgg.subAggregation ( avgAggregationBuilder );
+        
+        searchSourceBuilder.aggregation ( teamAgg );
+        searchSourceBuilder.query ( QueryBuilders.rangeQuery ( "userAge" ).gt ( 50 ) );
+        
+        rq.source ( searchSourceBuilder );
+        SearchResponse srr = elasticsearchClient.search ( rq, RequestOptions.DEFAULT );
+        
+        Terms userAgg = srr.getAggregations ().get ( "team" );
+        for ( Terms.Bucket bucket : userAgg.getBuckets () ) {
+            Avg Ua_avg = bucket.getAggregations ().get ( "user_Age_avg" );
+            
+            System.out.println (bucket.getKey ()+"\t\t"+Ua_avg.getName ()+"\t\t"+Ua_avg.getValue ());
+        }
+    }
 }

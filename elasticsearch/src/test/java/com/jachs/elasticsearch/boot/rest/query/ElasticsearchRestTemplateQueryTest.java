@@ -5,9 +5,14 @@ import java.io.IOException;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollAction;
+import org.elasticsearch.action.search.SearchScrollRequest;
+import org.elasticsearch.action.search.SearchScrollRequestBuilder;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -136,7 +141,7 @@ public class ElasticsearchRestTemplateQueryTest {
         printSearchHit(searchHits.getHits ());
 	}
 	/***
-	 * 查询全部
+	 * from + size浅分页查询全部,数据量10000-50000
 	 */
 	@Test
 	public void test7() throws IOException {
@@ -161,5 +166,26 @@ public class ElasticsearchRestTemplateQueryTest {
             printSearchHit(searchHits.getHits ());
             page++;
 	    }
+	}
+	//报错找不到id待解决
+	@Test
+	public void test8() throws IOException {
+	    SearchScrollRequest rq = new SearchScrollRequest(xbIndex);
+
+	    Scroll scroll=new Scroll(TimeValue.timeValueMillis ( 1000 ));
+	    scroll.keepAlive ();
+	    
+	    rq.scroll ( scroll );
+	    
+	    rq.scrollId ( "OidCf3cBgoU9kxH5Zl15" );
+	    rq.scroll ( "1m");
+        
+	    
+        SearchResponse srr=elasticsearchClient.scroll ( rq, RequestOptions.DEFAULT );
+        SearchHits searchHits=srr.getHits();
+        
+        srr.getScrollId ();
+        
+        printSearchHit(searchHits.getHits ());
 	}
 }
