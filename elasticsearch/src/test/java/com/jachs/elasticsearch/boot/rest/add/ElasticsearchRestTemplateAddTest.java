@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
@@ -90,58 +91,61 @@ public class ElasticsearchRestTemplateAddTest {
 	    
 		BulkRequest br=new BulkRequest();
 		Random random=new Random();
-		
+		DateUtils dus=new DateUtils ();
+	    Date date=new Date();
+	    
 		for (int kk = 0; kk <50; kk++) {
+		    Date randomDate= dus.addYears (date, date.getYear ()-random.nextInt (  2020));
 			IndexRequest indexRequest = new IndexRequest("user");
 			Map<String, Object>dateMap=new HashMap<String, Object>();
 			if(kk<=5) {
 				dateMap.put("group", "自行车");
 				dateMap.put("country", "澳大利亚");
-				dateMap.put("mtime", new Date ());
-				dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-				dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+				dateMap.put("timestamp",sdf.format (randomDate));
+				dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>5&&kk<=10) {
 				dateMap.put("group", "小电驴");
 				dateMap.put("country", "意大利");
-				dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>10&&kk<=15) {
 				dateMap.put("group", "小汽车");
 				dateMap.put("country", "大虾米");
-				dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>15&&kk<=20) {
 				dateMap.put("group", "大步行");
 				dateMap.put("country", "大米");
-				dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>25&&kk<=30) {
 				dateMap.put("group", "tank");
 				dateMap.put("country", "german");
-				dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>35&&kk<=40) {
 				dateMap.put("group", "小的汽车");
 				dateMap.put("country", "大虾米棒子");
-				dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+				dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
 			}
 			if(kk>45&&kk<=50) {
                 dateMap.put("group", "new grop");
                 dateMap.put("country", "Africaman");
-                dateMap.put("mtime", new Date ());
-                dateMap.put("timestamp",sdf.format ( new Date ( System.currentTimeMillis ()-random.nextInt ( 50000 ) ) ));
-                dateMap.put("timestamp1",sdf1.format ( new Date ( System.currentTimeMillis ()-random.nextInt (50000 ) ) ));
+                dateMap.put("mtime", randomDate);
+                dateMap.put("timestamp",sdf.format (randomDate));
+                dateMap.put("timestamp1",sdf1.format (randomDate));
             }
 			
 			dateMap.put("userName", RandomStringUtils.random(6, 0x4e00, 0x9fa5, false,false));
