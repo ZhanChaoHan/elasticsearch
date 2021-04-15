@@ -36,6 +36,7 @@ public class ElasticsearchRestTemplateAddTest {
 	
 	private static final String index="test";
 	private static final String xbIndex="xbindex";
+	
 	//单条添加,创建索引
 	@Test
 	public void test1() throws IOException {
