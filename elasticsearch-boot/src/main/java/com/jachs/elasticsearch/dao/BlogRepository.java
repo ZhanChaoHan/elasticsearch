@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.jachs.elasticsearch.entity.BlogModel;
 
-
+/**
+ * @author zhanchaohan
+ * 
+ */
 @Component
 public interface BlogRepository extends ElasticsearchRepository<BlogModel,String> {
 	public BlogModel findByIdAndTitle(String id,String title);

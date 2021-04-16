@@ -26,6 +26,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/***
+ * 
+ * @author zhanchaohan
+ *
+ */
 public class query {
 	private TransportClient client;
 	 private String EsIndex="etest";

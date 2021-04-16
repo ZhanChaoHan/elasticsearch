@@ -10,7 +10,7 @@
 		<relativePath />
 	</parent>
 	<groupId>com.jachs.elasticsearch</groupId>
-	<artifactId>elasticsearch</artifactId>
+	<artifactId>elasticsearch-boot</artifactId>
 	<version>1.0</version>
 	<name>elasticsearch</name>
 	<description>elasticsearchDemo</description>

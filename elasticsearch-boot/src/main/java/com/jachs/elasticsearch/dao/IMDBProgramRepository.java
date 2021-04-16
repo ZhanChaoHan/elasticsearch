@@ -7,6 +7,10 @@ import com.jachs.elasticsearch.entity.IMDBProgram;
 
 import java.util.List;
 
+/**
+ * @author zhanchaohan
+ * 
+ */
 @Component
 public interface IMDBProgramRepository extends ElasticsearchRepository<IMDBProgram,String> {
     List<IMDBProgram> findByEpisode(Long eps);

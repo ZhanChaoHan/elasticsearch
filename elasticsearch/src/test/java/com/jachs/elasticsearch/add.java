@@ -50,7 +50,7 @@ public class add {
         indexRequestBuilder.execute ();
     }
 
-    // 单条制定ID
+    // 单条指定ID
     @Test
     public void add1 () {
         Map<String, Object> data = new HashMap<String, Object> ();
@@ -91,7 +91,7 @@ public class add {
             System.out.println ( itemResponse.getItemId () );
         }
     }
-
+    //批量添加
     @Test
     public void add4 () {
         BulkRequestBuilder bulkRequestBuilder = client.prepareBulk ();

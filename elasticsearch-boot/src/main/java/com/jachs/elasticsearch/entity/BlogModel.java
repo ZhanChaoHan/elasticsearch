@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+/**
+ * @author zhanchaohan
+ * 
+ */
 @Data
 @Accessors(chain = true)
 @Document(indexName = "blog", indexStoreType = "java")
