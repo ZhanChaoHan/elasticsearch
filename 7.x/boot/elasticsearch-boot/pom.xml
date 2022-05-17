@@ -9,6 +9,7 @@
 		<version>2.4.0</version>
 		<relativePath />
 	</parent>
+	
 	<groupId>com.jachs.elasticsearch</groupId>
 	<artifactId>elasticsearch-boot</artifactId>
 	<version>1.0</version>
@@ -65,19 +66,6 @@
 			<artifactId>elasticsearch</artifactId>
 			<version>${es.version}</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>org.elasticsearch.client</groupId>
-			<artifactId>transport</artifactId>
-			<version>${es.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.elasticsearch.plugin</groupId>
-			<artifactId>transport-netty4-client</artifactId>
-			<version>${es.version}</version>
-		</dependency>
-		-->
 		<!-- rest -->
 		<dependency>
 			<groupId>org.elasticsearch.client</groupId>
@@ -110,30 +98,6 @@
 		</dependency>
 
 
-		<!-- jdbc支持,收费功能-->
-		<!-- 
-		<dependency>
-			<groupId>org.elasticsearch.plugin</groupId>
-			<artifactId>jdbc</artifactId>
-			<version>6.3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.elasticsearch.plugin</groupId>
-			<artifactId>x-pack-core</artifactId>
-			<version>${es.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.elasticsearch.plugin</groupId>
-			<artifactId>x-pack-sql-jdbc</artifactId>
-			<version>${es.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.patterncat</groupId>
-			<artifactId>spring-boot-starter-elasticsearch-jdbc</artifactId>
-			<version>0.0.1</version>
-		</dependency>
- 		-->
 	</dependencies>
 
 	<build>

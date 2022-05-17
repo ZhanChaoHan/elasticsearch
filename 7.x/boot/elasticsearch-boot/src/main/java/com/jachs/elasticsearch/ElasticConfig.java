@@ -38,7 +38,7 @@ public class ElasticConfig extends AbstractElasticsearchConfiguration {
         return RestClients.create(clientConfiguration).rest();
     }
     //spring提供的客户端
-    @Bean
+    @Bean("erTemp")
     public ElasticsearchRestTemplate restTemplate() throws Exception {
         return new ElasticsearchRestTemplate(elasticsearchClient());
     }
